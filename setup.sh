@@ -43,6 +43,24 @@ sudo apt install -y ~/Downloads/slack.deb
 # Gnome tweak
 sudo apt install -y gnome-tweak-tool
 
+# Java (OpenJDK)
+sudo apt install -y default-jre
+
+
+# Increase watch-files number (requires restart)
+cat << __EOT__ | sudo tee -a /etc/sysctl.conf
+
+# Because of projects having way too many files to watch (e.g. Angular)
+fs.inotify.max_user_watches=524288
+__EOT__
+
+
+# AWS CLI v2
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+mv awscliv2.zip ~/Downloads
+unzip ~/Downloads/awscliv2.zip -d ~/Downloads
+sudo ~/Downloads/aws/install
+
 
 
 # Various configuration files
