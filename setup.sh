@@ -47,14 +47,6 @@ sudo apt install -y gnome-tweak-tool
 sudo apt install -y default-jre
 
 
-# Increase watch-files number (requires restart)
-cat << __EOT__ | sudo tee -a /etc/sysctl.conf
-
-# Because of projects having way too many files to watch (e.g. Angular)
-fs.inotify.max_user_watches=524288
-__EOT__
-
-
 # AWS CLI v2
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 mv awscliv2.zip ~/Downloads
@@ -63,7 +55,9 @@ sudo ~/Downloads/aws/install
 
 
 
+#
 # Various configuration files
+#
 
 # VIM
 cat << __EOT__ | sudo tee /etc/vim/vimrc.local
@@ -75,4 +69,32 @@ set incsearch          " Incremental search
 "set hidden             " Hide buffers when they are abandoned
 "set mouse=a            " Enable mouse usage (all modes)
 "set number
+__EOT__
+
+
+# Increase watch-files number (requires restart)
+cat << __EOT__ | sudo tee -a /etc/sysctl.conf
+
+# Because of projects having way too many files to watch (e.g. Angular)
+fs.inotify.max_user_watches=524288
+__EOT__
+
+# NPM "global": we set npm global to be in the user home directory, .npm-global
+cat << __EOT__ | tee ~/.npmrc
+prefix=~/.npm-global
+__EOT__
+
+
+# NPM "global": add bin to PATH
+cat << '__EOT__' | tee -a ~/.profile
+
+export PATH=~/.npm-global/bin:$PATH
+__EOT__
+
+
+# Make "more/less" case insensitive and add that nice Midnight Commander alias/wrapper
+cat << __EOT__ | sudo tee -a /etc/bash.bashrc
+
+export LESS="-IR"
+alias mc='. /usr/share/mc/bin/mc-wrapper.sh'
 __EOT__
