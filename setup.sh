@@ -10,7 +10,7 @@ sudo apt update
 sudo apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common 
 
 # Various tools/utils 
-sudo apt install -y gparted vim mc synaptic
+sudo apt install -y gparted vim mc synaptic iputils-ping inetutils-traceroute
 
 # nodejs
 curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | sudo -E bash -
