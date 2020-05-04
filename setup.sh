@@ -2,15 +2,23 @@
 
 NODEJS_VERSION=12
 SLACK_VERSION=4.4.2
+INSTALL_WINE=YES
+INSTALL_SKYPE=YES
 
 
+sudo dpkg --add-architecture i386
 sudo apt update
 
 # Required by some packages and package management itself
 sudo apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common 
 
 # Various tools/utils 
-sudo apt install -y gparted vim mc synaptic iputils-ping inetutils-traceroute
+sudo apt install -y gparted vim mc synaptic iputils-ping inetutils-traceroute dconf-editor net-tools
+
+# Wine
+if [[ "${INSTALL_WINE}" == "YES" ]]; then
+  sudo apt install -y wine64 wine32
+fi
 
 # nodejs
 curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | sudo -E bash -
@@ -34,7 +42,6 @@ sudo dpkg -i ~/Downloads/smartgit.deb
 # Postman
 sudo snap install postman
 
-
 # Slack
 curl -fsSL https://downloads.slack-edge.com/linux_releases/slack-desktop-${SLACK_VERSION}-amd64.deb > ~/Downloads/slack.deb 
 sudo apt install -y ~/Downloads/slack.deb
@@ -53,6 +60,13 @@ mv awscliv2.zip ~/Downloads
 unzip ~/Downloads/awscliv2.zip -d ~/Downloads
 sudo ~/Downloads/aws/install
 
+# Skype
+if [[ "${INSTALL_SKYPE}" == "YES" ]]; then
+  sudo snap install skype --classic
+fi
+
+# VLC
+sudo apt install -y vlc
 
 
 #
@@ -60,7 +74,7 @@ sudo ~/Downloads/aws/install
 #
 
 # VIM
-cat << __EOT__ | sudo tee /etc/vim/vimrc.local
+cat << __T__ | sudo tee /etc/vim/vimrc.local
 set showcmd            " Show (partial) command in status line.
 set showmatch          " Show matching brackets.
 set ignorecase         " Do case insensitive matching
@@ -69,32 +83,33 @@ set incsearch          " Incremental search
 "set hidden             " Hide buffers when they are abandoned
 "set mouse=a            " Enable mouse usage (all modes)
 "set number
-__EOT__
+__T__
 
 
 # Increase watch-files number (requires restart)
-cat << __EOT__ | sudo tee -a /etc/sysctl.conf
+cat << __T__ | sudo tee -a /etc/sysctl.conf
 
 # Because of projects having way too many files to watch (e.g. Angular)
 fs.inotify.max_user_watches=524288
-__EOT__
+__T__
 
 # NPM "global": we set npm global to be in the user home directory, .npm-global
-cat << __EOT__ | tee ~/.npmrc
+cat << __T__ | tee ~/.npmrc
 prefix=~/.npm-global
-__EOT__
+__T__
 
 
 # NPM "global": add bin to PATH
-cat << '__EOT__' | tee -a ~/.profile
+# Note please variables are NOT expanded here!
+cat << '__T__' | tee -a ~/.profile
 
 export PATH=~/.npm-global/bin:$PATH
-__EOT__
+__T__
 
 
 # Make "more/less" case insensitive and add that nice Midnight Commander alias/wrapper
-cat << __EOT__ | sudo tee -a /etc/bash.bashrc
+cat << __T__ | sudo tee -a /etc/bash.bashrc
 
 export LESS="-IR"
 alias mc='. /usr/share/mc/bin/mc-wrapper.sh'
-__EOT__
+__T__
