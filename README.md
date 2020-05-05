@@ -1,5 +1,7 @@
 # Freshly installed Ubuntu Desktop setup
 
+A very simple script to install the usual stuff! At least my usual one :-) 
+
 ## Quick start 
 
 Just run the shell script
