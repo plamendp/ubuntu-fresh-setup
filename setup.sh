@@ -13,7 +13,7 @@ sudo apt update
 sudo apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common 
 
 # Various tools/utils 
-sudo apt install -y gparted vim mc synaptic iputils-ping inetutils-traceroute dconf-editor net-tools
+sudo apt install -y gparted vim mc synaptic iputils-ping inetutils-traceroute dconf-editor net-tools findutils
 
 # Wine
 if [[ "${INSTALL_WINE}" == "YES" ]]; then
