@@ -69,6 +69,11 @@ fi
 sudo apt install -y vlc
 
 
+# SSH Server
+sudo apt install -y openssh-server
+
+
+
 #
 # Various configuration files
 #
@@ -113,3 +118,12 @@ cat << __T__ | sudo tee -a /etc/bash.bashrc
 export LESS="-IR"
 alias mc='. /usr/share/mc/bin/mc-wrapper.sh'
 __T__
+
+
+# Disable root over ssh and plain text password login (onlu non root and only with ssh keys)
+cat << __T__ | sudo tee -a /etc/ssh/sshd_config.d/001-local.conf
+
+PermitRootLogin no
+PasswordAuthentication no
+__T__
+
