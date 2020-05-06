@@ -5,9 +5,29 @@ SLACK_VERSION=4.4.2
 INSTALL_WINE=YES
 INSTALL_SKYPE=YES
 
+NOTE="# Added by Ubutnu-Fresh-Setup: https://github.com/plamendp/ubuntu-fresh-setup"
+
+
+if [ -f "/tmp/ubuntu-fresh-setup.lock" ]; then 
+   echo "Lock file found: /tmp/ubuntu-fresh-setup.lock"
+   echo "It seems you already executed this script before."
+   echo "Running it again may ruin your setup."
+   echo "Check the system manually OR remove /tmp/ubuntu-fresh-setup.lock and try again."
+   exit;
+fi
+
+touch "/tmp/ubuntu-fresh-setup.lock"
+
 
 sudo dpkg --add-architecture i386
 sudo apt update
+apt-get -y upgrade
+
+
+# ###################################################################
+# Set timezone
+dpkg-reconfigure tzdata
+
 
 # ###################################################################
 # Required by some packages and package management itself
@@ -15,7 +35,10 @@ sudo apt-get install -y apt-transport-https ca-certificates curl gnupg-agent sof
 
 # ###################################################################
 # Various tools/utils 
-sudo apt install -y gparted vim mc synaptic iputils-ping inetutils-traceroute dconf-editor net-tools findutils
+sudo apt install -y \
+	gparted vim mc synaptic iputils-ping \
+	inetutils-traceroute dconf-editor net-tools findutils \
+	lynx alacarte htop
 
 # ###################################################################
 # Wine
@@ -32,6 +55,8 @@ sudo apt-get install -y nodejs
 # docker (this will install docker.io as a dependancy)
 # As of Ubuntu 20.04 docker.io package is more up to date
 sudo apt install -y docker-compose
+# Add current user to docker group (require logout and login, better system reboot)
+sudo usermod -aG docker $USER
 
 # ###################################################################
 # Sublime
@@ -83,6 +108,12 @@ sudo apt install -y vlc
 # SSH Server
 sudo apt install -y openssh-server
 
+
+
+sudo apt install -y -f
+
+
+
 # ###################################################################
 #
 # Various configuration files
@@ -106,6 +137,7 @@ __T__
 # Increase watch-files number (requires restart)
 cat << __T__ | sudo tee -a /etc/sysctl.conf
 
+$NOTE
 # Because of projects having way too many files to watch (e.g. Angular)
 fs.inotify.max_user_watches=524288
 __T__
@@ -118,16 +150,17 @@ __T__
 
 # ###################################################################
 # NPM "global": add bin to PATH
-# Note please variables are NOT expanded here!
-cat << '__T__' | tee -a ~/.profile
+cat << __T__ | tee -a ~/.profile
 
-export PATH=~/.npm-global/bin:$PATH
+$NOTE
+export PATH=~/.npm-global/bin:\$PATH
 __T__
 
 # ###################################################################
 # Make "more/less" case insensitive and add that nice Midnight Commander alias/wrapper
 cat << __T__ | sudo tee -a /etc/bash.bashrc
 
+$NOTE
 export LESS="-IR"
 alias mc='. /usr/share/mc/bin/mc-wrapper.sh'
 __T__
@@ -136,8 +169,15 @@ __T__
 # Disable root over ssh and plain text password login (onlu non root and only with ssh keys)
 cat << __T__ | sudo tee -a /etc/ssh/sshd_config.d/001-local.conf
 
+$NOTE
 PermitRootLogin no
 PasswordAuthentication no
 __T__
 
+# ###################################################################
+# SSH Client: avoid "too many auth failures" by setting a requirement an identitiy to be specified
+cat << __T__ | sudo tee -a /etc/ssh/ssh_config.d/001-local.conf
 
+$NOTE
+IdentitiesOnly=yes
+__T__
