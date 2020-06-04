@@ -67,8 +67,8 @@ sudo apt install -y sublime-text
 
 # ###################################################################
 # Smartgit
-curl -fsSL https://www.syntevo.com/downloads/smartgit/smartgit-20_1_1.deb > ~/Downloads/smartgit.deb 
-sudo dpkg -i ~/Downloads/smartgit.deb
+curl -fsSL https://www.syntevo.com/downloads/smartgit/smartgit-20_1_1.deb > /tmp/smartgit.deb
+sudo dpkg -i /tmp/smartgit.deb
 
 # ###################################################################
 # Postman
@@ -76,8 +76,8 @@ sudo snap install postman
 
 # ###################################################################
 # Slack
-curl -fsSL https://downloads.slack-edge.com/linux_releases/slack-desktop-${SLACK_VERSION}-amd64.deb > ~/Downloads/slack.deb 
-sudo apt install -y ~/Downloads/slack.deb
+curl -fsSL https://downloads.slack-edge.com/linux_releases/slack-desktop-${SLACK_VERSION}-amd64.deb > /tmp/slack.deb
+sudo apt install -y /tmp/slack.deb
 
 # ###################################################################
 # Gnome tweak
@@ -90,9 +90,9 @@ sudo apt install -y default-jre
 # ###################################################################
 # AWS CLI v2
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-mv awscliv2.zip ~/Downloads
-unzip ~/Downloads/awscliv2.zip -d ~/Downloads
-sudo ~/Downloads/aws/install
+mv awscliv2.zip /tmp
+unzip /tmp/awscliv2.zip -d /tmp
+sudo /tmp/aws/install
 
 # ###################################################################
 # Skype
@@ -108,6 +108,9 @@ sudo apt install -y vlc
 # SSH Server
 sudo apt install -y openssh-server
 
+# ###################################################################
+# Terraform
+curl -fsSL https://releases.hashicorp.com/terraform/"${TERRAFORM_VERSION}"/terraform_"${TERRAFORM_VERSION}"_linux_amd64.zip > /tmp/terraform.zip && sudo unzip -o /tmp/terraform.zip -d /usr/local/bin
 
 
 sudo apt install -y -f
