@@ -4,6 +4,7 @@ NODEJS_VERSION=12
 SLACK_VERSION=4.4.2
 INSTALL_WINE=YES
 INSTALL_SKYPE=YES
+TERRAFORM_VERSION=0.12.26
 
 NOTE="# Added by Ubutnu-Fresh-Setup: https://github.com/plamendp/ubuntu-fresh-setup"
 
@@ -110,7 +111,9 @@ sudo apt install -y openssh-server
 
 # ###################################################################
 # Terraform
-curl -fsSL https://releases.hashicorp.com/terraform/"${TERRAFORM_VERSION}"/terraform_"${TERRAFORM_VERSION}"_linux_amd64.zip > /tmp/terraform.zip && sudo unzip -o /tmp/terraform.zip -d /usr/local/bin
+curl -fsSL https://releases.hashicorp.com/terraform/"${TERRAFORM_VERSION}"/terraform_"${TERRAFORM_VERSION}"_linux_amd64.zip > /tmp/terraform.zip \
+  && sudo unzip -o /tmp/terraform.zip -d /usr/local/bin \
+  && sudo chmod +x /usr/local/bin/terraform
 
 
 sudo apt install -y -f
