@@ -36,7 +36,7 @@ Simple scripts to start/stop/restart of the Portainer - a web based Docker manag
 You can find Portainer and Dozzle here:
 
     https://www.portainer.io/
-    https://gist.github.com/plamendp/324d988ff2e0f8f1fa9f4fcf0437dd5f
+    https://github.com/amir20/dozzle
  
 
 ### Shutter Screenshot tool
