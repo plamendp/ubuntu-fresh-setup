@@ -43,3 +43,7 @@ You can find Portainer and Dozzle here:
 
 	
 	sudo snap install shutter
+
+### Imagemagick: image manipulations tool
+
+    sudo apt install imagemagick
