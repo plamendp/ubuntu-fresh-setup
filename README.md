@@ -1,4 +1,4 @@
-# Initial setup of a Freshly installed Ubuntu Desktop
+# Initial setup of a Freshly installed Ubuntu Desktop (tested with v20.04+ but should be fine with 16.04+ as well)
 
 A very simple script to install and setup the usual stuff you are doing every time you install a brand new Ubuntu Desktop! 
 
@@ -38,3 +38,8 @@ You can find Portainer and Dozzle here:
     https://www.portainer.io/
     https://gist.github.com/plamendp/324d988ff2e0f8f1fa9f4fcf0437dd5f
  
+
+### Shutter Screenshot tool
+
+	
+	sudo snap install shutter
